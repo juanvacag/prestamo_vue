@@ -1,14 +1,14 @@
 <script setup>
 //composition API
 
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import Header from './components/Header.vue'
 import Button from './components/Button.vue'
 import {calcularTotalPagar} from './helpers'
 
 const cantidad = ref(MAX/2);
 const meses = ref(6);
-const total = ref(calcularTotalPagar(cantidad.value, meses.value));
+const total = ref(0);
 const MIN = 0;
 const MAX = 20000;
 const STEP = 100;
@@ -21,6 +21,10 @@ const formatearDinero = (valor) => {
    });
    return formatter.format(valor)
 };
+
+    watch([cantidad, meses], () => {
+        total.value = calcularTotalPagar(cantidad.value, meses.value);
+    });
 
     const handleChangeDecremento = () => {
         const valor = cantidad.value - STEP;
@@ -80,7 +84,7 @@ const formatearDinero = (valor) => {
                 <option value="24">24 Meses</option>
           </select>
       </div>
-      <div class="my-5 space-y-3 bg-gray-50 p-5">
+      <div v-if="total > 0" class="my-5 space-y-3 bg-gray-50 p-5">
             <h2 class="text-2xl font-extrabold text-gray-500 text-center">Resumen <span class="text-indigo-600">de pagos </span>
                 Resumen
             </h2>
@@ -88,6 +92,7 @@ const formatearDinero = (valor) => {
             <p class="text-xl text-gray-500 text-center font-bold">Total a pagar: {{formatearDinero(total)}}</p>
             <p class="text-xl text-gray-500 text-center font-bold">Mensualidades</p>
       </div>
+      <p v-else class="text-center">Añade una cantidad y un plazo a pagar</p>
   </div>
 </template>
 
