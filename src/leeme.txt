@@ -4,3 +4,5 @@ Con los ComputedProperties podemos revisar los valores derivados de una funcion;
 pero algunas veces queremos modificar algo extra cuando algún state cambia, con composition API puedes utilizar la funcion watch para logarlo.
 
 un watch tomará una o múltiples dependencias; y cuando estas cambien entonces podremos llamar otra función o realizar una validación.
+
+actualización 2
